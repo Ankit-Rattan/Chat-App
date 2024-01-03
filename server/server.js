@@ -1,10 +1,14 @@
+// server.js
 const express = require('express');
 const http = require('http');
 const socketIO = require('socket.io');
 const mongoose = require('mongoose');
-require('dotenv').config();
+const dotenv = require('dotenv');
 const cors = require('cors');
+const session = require('express-session');
+const passport = require('./config/passport'); // Ensure correct path
 
+dotenv.config();
 
 const app = express();
 const server = http.createServer(app);
@@ -20,6 +24,12 @@ const PORT = process.env.PORT || 5000;
 
 app.use(express.json());
 app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
+
+app.use(
+  session({ secret: 'your-secret-key', resave: true, saveUninitialized: true })
+);
+app.use(passport.initialize());
+app.use(passport.session());
 
 mongoose.connect(process.env.MONGODB_URI, {
   useNewUrlParser: true,
@@ -47,11 +57,10 @@ io.on('connection', async (socket) => {
   console.log('A user connected');
 
   try {
-    // Retrieve messages from the last 24 hours
-    const messages = await ChatMessage.find({ timestamp: { $gte: new Date(Date.now() - 24 * 60 * 60 * 1000) } })
-      .sort({ timestamp: 'asc' });
+    const messages = await ChatMessage.find({
+      timestamp: { $gte: new Date(Date.now() - 24 * 60 * 60 * 1000) },
+    }).sort({ timestamp: 'asc' });
 
-    // Send existing messages to the connected client
     socket.emit('chat history', messages);
   } catch (error) {
     console.error('Error retrieving messages:', error);
@@ -64,7 +73,6 @@ io.on('connection', async (socket) => {
     await newMessage.save();
 
     io.emit('chat message', newMessage);
-    // console.log(newMessage.message);
   });
 
   socket.on('disconnect', () => {
