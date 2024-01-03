@@ -64,6 +64,7 @@ io.on('connection', async (socket) => {
     await newMessage.save();
 
     io.emit('chat message', newMessage);
+    // console.log(newMessage.message);
   });
 
   socket.on('disconnect', () => {
