@@ -15,21 +15,22 @@ function App() {
   const [messageInput, setMessageInput] = useState('');
 
   useEffect(() => {
-    // Attach event listener only once when component mounts
-    socket.on('chat message', (message) => {
+    const handleChatMessage = (message) => {
       setMessages((prevMessages) => [...prevMessages, message]);
-    });
-
-    socket.on('chat history', (history) => {
-      setMessages(history);
-    });
-
-    // Cleanup the socket listener when the component unmounts
-    return () => {
-      socket.off('chat message');
-      socket.off('chat history');
     };
-  }, []); // Empty dependency array means this effect runs once on mount
+
+    const handleChatHistory = (history) => {
+      setMessages(history);
+    };
+
+    socket.on('chat message', handleChatMessage);
+    socket.on('chat history', handleChatHistory);
+
+    return () => {
+      socket.off('chat message', handleChatMessage);
+      socket.off('chat history', handleChatHistory);
+    };
+  }, [messages]);
 
   const sendMessage = () => {
     socket.emit('chat message', { user, message: messageInput });
@@ -52,6 +53,7 @@ function App() {
           </div>
         ))}
       </div>
+<<<<<<< HEAD
       <div className='button'>
 
       <input
@@ -60,6 +62,26 @@ function App() {
         value={user}
         onChange={(e) => setUser(e.target.value)}
       />
+=======
+
+      {user ? (
+        <div>
+          <p>Welcome, {user}!</p>
+          <button onClick={() => setUser('')}>Logout</button>
+        </div>
+      ) : (
+        <div>
+          <input
+            type="text"
+            placeholder="Your Name"
+            value={user}
+            onChange={(e) => setUser(e.target.value)}
+          />
+          <button onClick={sendMessage}>Login</button>
+        </div>
+      )}
+
+>>>>>>> 4e2556e72f220671a67edb433d869a37bce2646e
       <input
         type="text"
         placeholder="Type your message... 📝"
