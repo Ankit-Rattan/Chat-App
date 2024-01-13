@@ -39,28 +39,37 @@ function App() {
   };
 
   return (
-    <div>
-      <div>
+    <>
+    <div className='main'>
+    <h1 className='heading'>👨‍💻Thought Box⌨️</h1>
+  <div>
+  </div>
+      <div className='message'>
         {messages.map((message, index) => (
-          <div key={index}>
-            <strong>{message.user}:</strong> {message.message}
+          <div key={index} className='messbox'>
+            <div className='messboxin'>{message.message}</div>
+            <p className='messauth'><strong>~</strong> {message.user}</p> 
           </div>
         ))}
       </div>
+      <div className='button'>
+
       <input
         type="text"
-        placeholder="Your Name"
+        placeholder="Your Name 🙎"
         value={user}
         onChange={(e) => setUser(e.target.value)}
       />
       <input
         type="text"
-        placeholder="Type your message..."
+        placeholder="Type your message... 📝"
         value={messageInput}
         onChange={(e) => setMessageInput(e.target.value)}
       />
       <button onClick={sendMessage}>Send</button>
+      </div>
     </div>
+    </>
   );
 }
 

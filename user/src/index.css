@@ -1,0 +1,86 @@
+body {
+    background-color: beige;
+    font-size: 16px;
+}
+
+.main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+.heading {
+    color: #444;
+    margin-bottom: 2rem;
+    text-align: center;
+    
+}
+
+.message {
+    background-color: whitesmoke;
+    width: 80%;
+    min-height: 250px;
+    border: 1px solid #ddd;
+    padding: 1rem;
+    box-sizing: border-box;
+    overflow-y: auto;
+    margin-bottom: 1.5rem;
+    box-shadow: 3px 3px 3px black;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+}
+
+.message div {
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.messbox {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+}
+
+.messboxin {
+    background-color: cadetblue;
+    color: azure;
+    padding: 0.5rem;
+    border-radius: 5px;
+    margin-right: 0.5rem;
+    width: max-content;
+}
+
+.button {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 80%;
+}
+
+.button input[type="text"] {
+    flex-grow: 1;
+    padding: 0.5rem;
+    margin-right: 1rem;
+}
+
+.button button {
+    padding: 0.5rem 1rem;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.button button:hover {
+    background-color: #3e8e41;
+}
+
